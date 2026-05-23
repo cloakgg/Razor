@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razor's Edge Ltd — Premium Grooming, Lahore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            ivory: '#F5F0E8',
+                            sand: '#C4A882',
+                            brown: '#8B6F47',
+                            olive: '#4A5D3A',
+                            deepGreen: '#2D4A2D',
+                            terracotta: '#C4654A',
+                            warmGray: '#A09789',
+                            darkBg: '#0C0A08',
+                            darkCard: '#161310',
+                            darkBorder: '#2A2520',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #0C0A08; color: #F5F0E8; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0C0A08; }
+        ::-webkit-scrollbar-thumb { background: #2A2520; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B6F47; }
+
+        /* Hero text animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+        .animate-fadeInUp { animation: fadeInUp 1s ease-out forwards; }
+        .animate-fadeIn { animation: fadeIn 1.2s ease-out forwards; }
+        .animate-slideInLeft { animation: slideInLeft 1s ease-out forwards; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-600 { animation-delay: 600ms; }
+        .delay-800 { animation-delay: 800ms; }
+        .delay-1000 { animation-delay: 1000ms; }
+
+        /* Reveal on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Star rating interactive */
+        .star-input { cursor: pointer; transition: all 0.2s; }
+        .star-input:hover { transform: scale(1.2); }
+        .star-input.active { color: #C4A882; }
+
+        /* Horizontal scroll for reviews */
+        .reviews-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #2A2520 transparent;
+        }
+        .reviews-scroll::-webkit-scrollbar { height: 4px; }
+        .reviews-scroll::-webkit-scrollbar-track { background: transparent; }
+        .reviews-scroll::-webkit-scrollbar-thumb { background: #2A2520; border-radius: 2px; }
+
+        /* Texture overlay */
+        .paper-texture {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* Service card hover line */
+        .service-line {
+            width: 0;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .service-card:hover .service-line {
+            width: 48px;
+        }
+
+        /* Booking pulse */
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(196, 168, 130, 0.3); }
+            50% { box-shadow: 0 0 0 12px rgba(196, 168, 130, 0); }
+        }
+        .whatsapp-btn:hover {
+            animation: subtlePulse 2s infinite;
+        }
+
+        /* Comment appear animation */
+        @keyframes commentSlideIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .comment-new { animation: commentSlideIn 0.5s ease-out forwards; }
+
+        /* Toast */
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        .toast-in { animation: toastIn 0.4s ease-out forwards; }
+        .toast-out { animation: toastOut 0.3s ease-in forwards; }
+    </style>
+</head>
+<body class="paper-texture">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background: transparent;">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 rounded-full border border-brand-sand/40 flex items-center justify-center group-hover:border-brand-sand transition-colors duration-300">
+                    <span class="iconify text-brand-sand text-sm" data-icon="mdi:razor-double-edge"></span>
+                </div>
+                <span class="font-serif text-lg font-medium tracking-wide text-brand-ivory">Razor's Edge</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#philosophy" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Philosophy</a>
+                <a href="#services" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Services</a>
+                <a href="#reviews" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Reviews</a>
+                <a href="#community" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Community</a>
+                <a href="#contact" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Support</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://wa.me/923000000000?text=Hi%20Razor's%20Edge!%20I'd%20like%20to%20book%20an%20appointment." target="_blank"
+                   class="hidden sm:flex items-center gap-2 bg-brand-sand/10 border border-brand-sand/30 text-brand-sand text-xs font-medium px-4 py-2 rounded-full hover:bg-brand-sand/20 hover:border-brand-sand/50 transition-all duration-300">
+                    <span class="iconify text-base" data-icon="mdi:whatsapp"></span>
+                    Book Now
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-brand-ivory p-1">
+                    <span class="iconify text-2xl" data-icon="mdi:menu"></span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-brand-darkBg/98 backdrop-blur-xl border-t border-brand-darkBorder">
+            <div class="px-6 py-6 flex flex-col gap-4">
+                <a href="#philosophy" class="text-brand-warmGray hover:text-brand-ivory transition-colors py-2 mobile-link">Philosophy</a>
+                <a href="#services" class="text-brand-warmGray hover:text-brand-ivory transition-colors py-2 mobile-link">Services</a>
+                <a href="#reviews" class="text-brand-warmGray hover:text-brand-ivory transition-colors py-2 mobile-link">Reviews</a>
+                <a href="#community" class="text-brand-warmGray hover:text-brand-ivory transition-colors py-2 mobile-link">Community</a>
+                <a href="#contact" class="text-brand-warmGray hover:text-brand-ivory transition-colors py-2 mobile-link">Support</a>
+                <a href="https://wa.me/923000000000?text=Hi%20Razor's%20Edge!%20I'd%20like%20to%20book%20an%20appointment." target="_blank"
+                   class="flex items-center justify-center gap-2 bg-brand-sand/10 border border-brand-sand/30 text-brand-sand text-sm font-medium px-4 py-3 rounded-full mt-2">
+                    <span class="iconify text-lg" data-icon="mdi:whatsapp"></span>
+                    Book via WhatsApp
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/barbershop-hero/1920/1080.jpg" alt="Barbershop atmosphere"
+                 class="w-full h-full object-cover opacity-40" />
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-darkBg via-brand-darkBg/80 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-brand-darkBg/40"></div>
+        </div>
+
+        <!-- Decorative orb -->
+        <div class="absolute top-1/4 -right-32 w-96 h-96 bg-brand-brown/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-64 h-64 bg-brand-olive/8 rounded-full blur-[100px]"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-32 w-full">
+            <div class="max-w-2xl">
+                <div class="animate-fadeInUp opacity-0">
+                    <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-6">
+                        <span class="w-8 h-px bg-brand-sand/60"></span>
+                        Established in Lahore
+                    </span>
+                </div>
+
+                <h1 class="font-serif text-4xl sm:text-5xl md:text-7xl font-medium leading-[1.08] tracking-tight text-brand-ivory animate-fadeInUp opacity-0 delay-200">
+                    Where Craft<br/>
+                    Meets <em class="text-brand-sand not-italic">Conviction</em>
+                </h1>
+
+                <div class="w-20 h-px bg-brand-sand/40 mt-8 mb-8 animate-fadeInUp opacity-0 delay-400" style="animation: expandWidth 1s ease-out 0.6s forwards; width: 0;"></div>
+
+                <p class="text-base md:text-lg text-brand-warmGray leading-relaxed max-w-lg animate-fadeInUp opacity-0 delay-600">
+                    More than a barbershop — a sanctuary of precision and care. Every cut is a conversation between artisan and individual, rooted in tradition, shaped by intention.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-start gap-4 mt-10 animate-fadeInUp opacity-0 delay-800">
+                    <a href="https://wa.me/923000000000?text=Hi%20Razor's%20Edge!%20I'd%20like%20to%20book%20an%20appointment." target="_blank"
+                       class="whatsapp-btn inline-flex items-center gap-3 bg-brand-sand text-brand-darkBg font-medium text-sm px-8 py-4 rounded-full hover:bg-brand-ivory transition-all duration-300 hover:shadow-lg hover:shadow-brand-sand/20">
+                        <span class="iconify text-xl" data-icon="mdi:whatsapp"></span>
+                        Book Your Session
+                    </a>
+                    <a href="#philosophy" class="inline-flex items-center gap-2 text-brand-warmGray text-sm hover:text-brand-ivory transition-colors duration-300 group py-4 px-2">
+                        Our Philosophy
+                        <span class="iconify text-base group-hover:translate-x-1 transition-transform duration-300" data-icon="mdi:arrow-right"></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats strip -->
+            <div class="grid grid-cols-3 gap-8 mt-20 pt-10 border-t border-brand-darkBorder/50 max-w-lg animate-fadeInUp opacity-0 delay-1000">
+                <div>
+                    <p class="font-serif text-2xl md:text-3xl text-brand-ivory">12+</p>
+                    <p class="text-xs text-brand-warmGray mt-1">Years of Craft</p>
+                </div>
+                <div>
+                    <p class="font-serif text-2xl md:text-3xl text-brand-ivory">5K+</p>
+                    <p class="text-xs text-brand-warmGray mt-1">Happy Clients</p>
+                </div>
+                <div>
+                    <p class="font-serif text-2xl md:text-3xl text-brand-ivory">4.9</p>
+                    <p class="text-xs text-brand-warmGray mt-1">Avg. Rating</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fadeIn opacity-0 delay-1000">
+            <span class="text-[10px] tracking-[0.3em] uppercase text-brand-warmGray/60">Scroll</span>
+            <div class="w-px h-8 bg-gradient-to-b from-brand-sand/40 to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- ==================== PHILOSOPHY ==================== -->
+    <section id="philosophy" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-72 h-72 bg-brand-olive/5 rounded-full blur-[100px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
+                <!-- Image -->
+                <div class="reveal relative">
+                    <div class="relative overflow-hidden rounded-2xl">
+                        <img src="https://picsum.photos/seed/barber-craft-detail/800/1000.jpg" alt="Master barber at work"
+                             class="w-full h-[500px] md:h-[600px] object-cover" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg/40 to-transparent"></div>
+                    </div>
+                    <!-- Floating detail card -->
+                    <div class="absolute -bottom-6 -right-4 md:-right-8 bg-brand-darkCard border border-brand-darkBorder rounded-xl p-5 shadow-2xl max-w-[200px]">
+                        <p class="font-serif text-brand-sand text-2xl font-medium">100%</p>
+                        <p class="text-xs text-brand-warmGray mt-1 leading-relaxed">Handcrafted precision, never rushed</p>
+                    </div>
+                </div>
+
+                <!-- Text -->
+                <div class="reveal delay-200">
+                    <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-6">
+                        <span class="w-6 h-px bg-brand-sand/60"></span>
+                        Our Philosophy
+                    </span>
+
+                    <h2 class="font-serif text-3xl md:text-5xl font-medium leading-tight tracking-tight text-brand-ivory mb-8">
+                        The Art of<br/>Deliberate Grooming
+                    </h2>
+
+                    <div class="space-y-6 text-brand-warmGray leading-relaxed">
+                        <p>
+                            At Razor's Edge, we believe grooming is not maintenance — it's expression. Every fade, every line, every hot towel press is an act of care performed with intention.
+                        </p>
+                        <p>
+                            We source natural products, maintain transparent hygiene standards, and treat every chair as a space for honest craft. No shortcuts. No compromise.
+                        </p>
+                    </div>
+
+                    <!-- Values -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10 pt-10 border-t border-brand-darkBorder/50">
+                        <div class="group">
+                            <div class="w-10 h-10 rounded-lg bg-brand-sand/10 flex items-center justify-center mb-3 group-hover:bg-brand-sand/20 transition-colors duration-300">
+                                <span class="iconify text-brand-sand text-xl" data-icon="mdi:hand-heart-outline"></span>
+                            </div>
+                            <p class="text-sm font-medium text-brand-ivory">Handcrafted</p>
+                            <p class="text-xs text-brand-warmGray mt-1">Every detail, by hand</p>
+                        </div>
+                        <div class="group">
+                            <div class="w-10 h-10 rounded-lg bg-brand-olive/10 flex items-center justify-center mb-3 group-hover:bg-brand-olive/20 transition-colors duration-300">
+                                <span class="iconify text-brand-olive text-xl" data-icon="mdi:leaf"></span>
+                            </div>
+                            <p class="text-sm font-medium text-brand-ivory">Natural Products</p>
+                            <p class="text-xs text-brand-warmGray mt-1">Organic & sustainable</p>
+                        </div>
+                        <div class="group">
+                            <div class="w-10 h-10 rounded-lg bg-brand-terracotta/10 flex items-center justify-center mb-3 group-hover:bg-brand-terracotta/20 transition-colors duration-300">
+                                <span class="iconify text-brand-terracotta text-xl" data-icon="mdi:shield-check-outline"></span>
+                            </div>
+                            <p class="text-sm font-medium text-brand-ivory">Transparent</p>
+                            <p class="text-xs text-brand-warmGray mt-1">Clean process, always</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES ==================== -->
+    <section id="services" class="py-24 md:py-32 bg-brand-darkCard/50 relative">
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-brown/5 rounded-full blur-[120px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-4">
+                    <span class="w-6 h-px bg-brand-sand/60"></span>
+                    Services
+                    <span class="w-6 h-px bg-brand-sand/60"></span>
+                </span>
+                <h2 class="font-serif text-3xl md:text-5xl font-medium tracking-tight text-brand-ivory">
+                    Tailored to Your Life
+                </h2>
+                <p class="text-brand-warmGray mt-4 max-w-lg mx-auto">
+                    Organized around how you live — from your morning routine to weekend adventures.
+                </p>
+            </div>
+
+            <!-- Scenario Tabs -->
+            <div class="flex justify-center gap-2 mb-12 reveal">
+                <button onclick="switchTab('home')" data-tab="home" class="tab-btn active-tab px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-brand-sand/15 text-brand-sand border border-brand-sand/30">
+                    Home & Casual
+                </button>
+                <button onclick="switchTab('commute')" data-tab="commute" class="tab-btn px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-transparent text-brand-warmGray border border-brand-darkBorder hover:border-brand-sand/30 hover:text-brand-ivory">
+                    Commuting & Office
+                </button>
+                <button onclick="switchTab('outdoor')" data-tab="outdoor" class="tab-btn px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-transparent text-brand-warmGray border border-brand-darkBorder hover:border-brand-sand/30 hover:text-brand-ivory">
+                    Outdoor & Active
+                </button>
+            </div>
+
+            <!-- Service Cards -->
+            <div id="services-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Home services (default) -->
+                <div class="service-card reveal group relative bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/30 transition-all duration-500 cursor-pointer" onclick="bookService('Classic Cleanup')">
+                    <div class="overflow-hidden rounded-xl mb-5">
+                        <img src="https://picsum.photos/seed/classic-cleanup/600/400.jpg" alt="Classic Cleanup"
+                             class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-brand-ivory group-hover:text-brand-sand transition-colors duration-300">Classic Cleanup</h3>
+                            <p class="text-xs text-brand-warmGray mt-1">Neck & edge tidy for your off-day polish</p>
+                        </div>
+                        <span class="font-serif text-brand-sand text-lg">₨800</span>
+                    </div>
+                    <div class="service-line h-px bg-brand-sand/40 mt-4"></div>
+                </div>
+
+                <div class="service-card reveal delay-100 group relative bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/30 transition-all duration-500 cursor-pointer" onclick="bookService('Relaxed Fade')">
+                    <div class="overflow-hidden rounded-xl mb-5">
+                        <img src="https://picsum.photos/seed/relaxed-fade/600/400.jpg" alt="Relaxed Fade"
+                             class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-brand-ivory group-hover:text-brand-sand transition-colors duration-300">Relaxed Fade</h3>
+                            <p class="text-xs text-brand-warmGray mt-1">Low-maintenance style, effortless at home</p>
+                        </div>
+                        <span class="font-serif text-brand-sand text-lg">₨1,200</span>
+                    </div>
+                    <div class="service-line h-px bg-brand-sand/40 mt-4"></div>
+                </div>
+
+                <div class="service-card reveal delay-200 group relative bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/30 transition-all duration-500 cursor-pointer" onclick="bookService('Hot Towel Shave')">
+                    <div class="overflow-hidden rounded-xl mb-5">
+                        <img src="https://picsum.photos/seed/hot-towel-shave/600/400.jpg" alt="Hot Towel Shave"
+                             class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-brand-ivory group-hover:text-brand-sand transition-colors duration-300">Hot Towel Shave</h3>
+                            <p class="text-xs text-brand-warmGray mt-1">Ritual-level relaxation in your own rhythm</p>
+                        </div>
+                        <span class="font-serif text-brand-sand text-lg">₨1,500</span>
+                    </div>
+                    <div class="service-line h-px bg-brand-sand/40 mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SUSTAINABILITY / MATERIALS ==================== -->
+    <section class="py-24 md:py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal order-2 md:order-1">
+                    <span class="inline-flex items-center gap-2 text-brand-olive text-xs font-medium tracking-[0.2em] uppercase mb-6">
+                        <span class="w-6 h-px bg-brand-olive/60"></span>
+                        Our Commitment
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-5xl font-medium leading-tight tracking-tight text-brand-ivory mb-8">
+                        Responsible<br/>From Source to Chair
+                    </h2>
+                    <div class="space-y-6 text-brand-warmGray leading-relaxed">
+                        <p>
+                            Every product that touches your skin is chosen with care — organic shampoos, natural beard oils, and sterilized tools opened in front of you.
+                        </p>
+                        <p>
+                            We track our supply chain, minimize waste, and invest in tools that last decades, not months. Transparency isn't a feature — it's our foundation.
+                        </p>
+                    </div>
+
+                    <!-- Material tags -->
+                    <div class="flex flex-wrap gap-3 mt-8">
+                        <span class="px-4 py-2 rounded-full bg-brand-olive/10 border border-brand-olive/20 text-brand-olive text-xs font-medium">Organic Products</span>
+                        <span class="px-4 py-2 rounded-full bg-brand-sand/10 border border-brand-sand/20 text-brand-sand text-xs font-medium">Sterilized Tools</span>
+                        <span class="px-4 py-2 rounded-full bg-brand-terracotta/10 border border-brand-terracotta/20 text-brand-terracotta text-xs font-medium">Zero Waste Goal</span>
+                        <span class="px-4 py-2 rounded-full bg-brand-ivory/5 border border-brand-ivory/10 text-brand-warmGray text-xs font-medium">Local Sourcing</span>
+                    </div>
+                </div>
+
+                <div class="reveal delay-200 order-1 md:order-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="overflow-hidden rounded-2xl">
+                            <img src="https://picsum.photos/seed/organic-products-barber/400/500.jpg" alt="Organic products"
+                                 class="w-full h-64 object-cover hover:scale-105 transition-transform duration-700" />
+                        </div>
+                        <div class="overflow-hidden rounded-2xl mt-8">
+                            <img src="https://picsum.photos/seed/barber-tools-sterilize/400/500.jpg" alt="Sterilized tools"
+                                 class="w-full h-64 object-cover hover:scale-105 transition-transform duration-700" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== REVIEWS ==================== -->
+    <section id="reviews" class="py-24 md:py-32 bg-brand-darkCard/50 relative">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-brown/3 rounded-full blur-[150px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 reveal">
+                <div>
+                    <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-4">
+                        <span class="w-6 h-px bg-brand-sand/60"></span>
+                        Reviews
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-5xl font-medium tracking-tight text-brand-ivory">
+                        What Our Clients Say
+                    </h2>
+                </div>
+                <div class="flex items-center gap-2 mt-4 md:mt-0">
+                    <div class="flex items-center gap-0.5">
+                        <span class="iconify text-brand-sand" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand" data-icon="mdi:star-half-full"></span>
+                    </div>
+                    <span class="text-brand-ivory font-medium">4.9</span>
+                    <span class="text-brand-warmGray text-sm">from 280+ reviews</span>
+                </div>
+            </div>
+
+            <!-- Reviews Carousel -->
+            <div class="reviews-scroll flex gap-6 overflow-x-auto pb-6 -mx-2 px-2 reveal">
+                <!-- Review 1 -->
+                <div class="flex-shrink-0 w-80 bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/20 transition-colors duration-300">
+                    <div class="flex items-center gap-0.5 mb-4">
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                    </div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed mb-5">
+                        "Best barbershop in Lahore, hands down. The hot towel shave is an experience — not just a service. I leave feeling like a new man every time."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-brand-darkBorder/50">
+                        <div class="w-9 h-9 rounded-full bg-brand-sand/20 flex items-center justify-center">
+                            <span class="text-brand-sand text-xs font-medium">AH</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-brand-ivory">Ahmed Hassan</p>
+                            <p class="text-xs text-brand-warmGray">Regular since 2021</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="flex-shrink-0 w-80 bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/20 transition-colors duration-300">
+                    <div class="flex items-center gap-0.5 mb-4">
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                    </div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed mb-5">
+                        "My barber actually listens. I showed a reference photo and the result was better than the picture. Clean atmosphere, professional team."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-brand-darkBorder/50">
+                        <div class="w-9 h-9 rounded-full bg-brand-olive/20 flex items-center justify-center">
+                            <span class="text-brand-olive text-xs font-medium">UK</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-brand-ivory">Usman Khan</p>
+                            <p class="text-xs text-brand-warmGray">Regular since 2022</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="flex-shrink-0 w-80 bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/20 transition-colors duration-300">
+                    <div class="flex items-center gap-0.5 mb-4">
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand/40 text-sm" data-icon="mdi:star"></span>
+                    </div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed mb-5">
+                        "Brought my son for his first real haircut. The team made him feel so comfortable — now he asks to go back! Great with kids and adults alike."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-brand-darkBorder/50">
+                        <div class="w-9 h-9 rounded-full bg-brand-terracotta/20 flex items-center justify-center">
+                            <span class="text-brand-terracotta text-xs font-medium">SA</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-brand-ivory">Salman Ali</p>
+                            <p class="text-xs text-brand-warmGray">Visited 8 times</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="flex-shrink-0 w-80 bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/20 transition-colors duration-300">
+                    <div class="flex items-center gap-0.5 mb-4">
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                    </div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed mb-5">
+                        "The beard shaping here is next level. They use organic oils that smell incredible and my skin has never felt better. Premium experience worth every rupee."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-brand-darkBorder/50">
+                        <div class="w-9 h-9 rounded-full bg-brand-sand/20 flex items-center justify-center">
+                            <span class="text-brand-sand text-xs font-medium">RH</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-brand-ivory">Raza Hussain</p>
+                            <p class="text-xs text-brand-warmGray">Regular since 2020</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="flex-shrink-0 w-80 bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/20 transition-colors duration-300">
+                    <div class="flex items-center gap-0.5 mb-4">
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star-half-full"></span>
+                    </div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed mb-5">
+                        "Found them through a friend's recommendation. The WhatsApp booking is so convenient — no waiting on hold. The fade was crisp and clean. Coming back monthly!"
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-brand-darkBorder/50">
+                        <div class="w-9 h-9 rounded-full bg-brand-olive/20 flex items-center justify-center">
+                            <span class="text-brand-olive text-xs font-medium">BN</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-brand-ivory">Bilal Noor</p>
+                            <p class="text-xs text-brand-warmGray">First visit, now regular</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="flex-shrink-0 w-80 bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/20 transition-colors duration-300">
+                    <div class="flex items-center gap-0.5 mb-4">
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                        <span class="iconify text-brand-sand text-sm" data-icon="mdi:star"></span>
+                    </div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed mb-5">
+                        "I'm particular about my hair. Razor's Edge is the only place in Lahore where I don't have to give instructions twice. True craftsmen."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-brand-darkBorder/50">
+                        <div class="w-9 h-9 rounded-full bg-brand-terracotta/20 flex items-center justify-center">
+                            <span class="text-brand-terracotta text-xs font-medium">FA</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-brand-ivory">Farhan Akhtar</p>
+                            <p class="text-xs text-brand-warmGray">Regular since 2019</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Write a Review -->
+            <div class="mt-16 max-w-2xl mx-auto reveal">
+                <div class="bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-8">
+                    <h3 class="font-serif text-xl text-brand-ivory mb-6 text-center">Share Your Experience</h3>
+
+                    <!-- Star rating input -->
+                    <div class="flex justify-center gap-2 mb-6">
+                        <span class="star-input text-2xl text-brand-darkBorder" data-rating="1" onclick="setRating(1)">
+                            <span class="iconify" data-icon="mdi:star"></span>
+                        </span>
+                        <span class="star-input text-2xl text-brand-darkBorder" data-rating="2" onclick="setRating(2)">
+                            <span class="iconify" data-icon="mdi:star"></span>
+                        </span>
+                        <span class="star-input text-2xl text-brand-darkBorder" data-rating="3" onclick="setRating(3)">
+                            <span class="iconify" data-icon="mdi:star"></span>
+                        </span>
+                        <span class="star-input text-2xl text-brand-darkBorder" data-rating="4" onclick="setRating(4)">
+                            <span class="iconify" data-icon="mdi:star"></span>
+                        </span>
+                        <span class="star-input text-2xl text-brand-darkBorder" data-rating="5" onclick="setRating(5)">
+                            <span class="iconify" data-icon="mdi:star"></span>
+                        </span>
+                    </div>
+                    <p id="rating-label" class="text-center text-xs text-brand-warmGray mb-4">Select your rating</p>
+
+                    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                        <input id="review-name" type="text" placeholder="Your name"
+                               class="w-full bg-brand-darkCard border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-ivory placeholder-brand-warmGray/50 focus:outline-none focus:border-brand-sand/40 transition-colors duration-300" />
+                        <input id="review-service" type="text" placeholder="Service you had"
+                               class="w-full bg-brand-darkCard border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-ivory placeholder-brand-warmGray/50 focus:outline-none focus:border-brand-sand/40 transition-colors duration-300" />
+                    </div>
+                    <textarea id="review-text" rows="3" placeholder="Tell us about your experience..."
+                              class="w-full bg-brand-darkCard border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-ivory placeholder-brand-warmGray/50 focus:outline-none focus:border-brand-sand/40 transition-colors duration-300 resize-none mb-4"></textarea>
+
+                    <button onclick="submitReview()"
+                            class="w-full bg-brand-sand text-brand-darkBg font-medium text-sm py-3 rounded-xl hover:bg-brand-ivory transition-colors duration-300">
+                        Post Your Review
+                    </button>
+
+                    <!-- User Reviews Area -->
+                    <div id="user-reviews" class="mt-6 space-y-4"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COMMUNITY STORIES ==================== -->
+    <section id="community" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-brand-terracotta/5 rounded-full blur-[120px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-4">
+                    <span class="w-6 h-px bg-brand-sand/60"></span>
+                    Community
+                    <span class="w-6 h-px bg-brand-sand/60"></span>
+                </span>
+                <h2 class="font-serif text-3xl md:text-5xl font-medium tracking-tight text-brand-ivory">
+                    Real People, Real Style
+                </h2>
+                <p class="text-brand-warmGray mt-4 max-w-lg mx-auto">
+                    Our clients share more than outfits — they share moments from their lives.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Story 1 -->
+                <div class="reveal group">
+                    <div class="relative overflow-hidden rounded-2xl mb-4">
+                        <img src="https://picsum.photos/seed/community-man-outdoor/400/500.jpg" alt="Community style"
+                             class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <p class="text-sm text-brand-ivory font-medium">Daniyal</p>
+                    <p class="text-xs text-brand-warmGray mt-0.5">"Sunday freshness 🌿"</p>
+                    <div class="flex items-center gap-1 mt-2">
+                        <span class="iconify text-brand-sand text-xs" data-icon="mdi:heart"></span>
+                        <span class="text-xs text-brand-warmGray">48</span>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="reveal delay-100 group">
+                    <div class="relative overflow-hidden rounded-2xl mb-4">
+                        <img src="https://picsum.photos/seed/community-office-look/400/500.jpg" alt="Office style"
+                             class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <p class="text-sm text-brand-ivory font-medium">Haris</p>
+                    <p class="text-xs text-brand-warmGray mt-0.5">"Boardroom ready 💼"</p>
+                    <div class="flex items-center gap-1 mt-2">
+                        <span class="iconify text-brand-sand text-xs" data-icon="mdi:heart"></span>
+                        <span class="text-xs text-brand-warmGray">72</span>
+                    </div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="reveal delay-200 group">
+                    <div class="relative overflow-hidden rounded-2xl mb-4">
+                        <img src="https://picsum.photos/seed/community-wedding-event/400/500.jpg" alt="Event style"
+                             class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <p class="text-sm text-brand-ivory font-medium">Tariq</p>
+                    <p class="text-xs text-brand-warmGray mt-0.5">"Wedding season vibes ✨"</p>
+                    <div class="flex items-center gap-1 mt-2">
+                        <span class="iconify text-brand-sand text-xs" data-icon="mdi:heart"></span>
+                        <span class="text-xs text-brand-warmGray">95</span>
+                    </div>
+                </div>
+
+                <!-- Story 4 -->
+                <div class="reveal delay-300 group">
+                    <div class="relative overflow-hidden rounded-2xl mb-4">
+                        <img src="https://picsum.photos/seed/community-gym-active/400/500.jpg" alt="Active style"
+                             class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <p class="text-sm text-brand-ivory font-medium">Zain</p>
+                    <p class="text-xs text-brand-warmGray mt-0.5">"Fade fresh for the gym 🏋️"</p>
+                    <div class="flex items-center gap-1 mt-2">
+                        <span class="iconify text-brand-sand text-xs" data-icon="mdi:heart"></span>
+                        <span class="text-xs text-brand-warmGray">61</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BOOKING CTA ==================== -->
+    <section class="py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/barbershop-interior-warm/1920/600.jpg" alt="Barbershop interior"
+                 class="w-full h-full object-cover opacity-20" />
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-darkBg via-brand-darkBg/90 to-brand-darkBg/70"></div>
+        </div>
+
+        <div class="relative z-10 max-w-3xl mx-auto px-6 text-center reveal">
+            <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-6">
+                <span class="w-6 h-px bg-brand-sand/60"></span>
+                Book Now
+                <span class="w-6 h-px bg-brand-sand/60"></span>
+            </span>
+
+            <h2 class="font-serif text-3xl md:text-5xl font-medium tracking-tight text-brand-ivory mb-6">
+                Your Chair Awaits
+            </h2>
+            <p class="text-brand-warmGray leading-relaxed mb-10 max-w-md mx-auto">
+                Skip the wait. Book directly through WhatsApp — pick your service, choose your time, show up. It's that simple.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/923000000000?text=Hi%20Razor's%20Edge!%20I'd%20like%20to%20book%20an%20appointment.%20My%20preferred%20time%20is%20" target="_blank"
+                   class="whatsapp-btn inline-flex items-center gap-3 bg-[#25D366] text-white font-medium text-base px-10 py-4 rounded-full hover:bg-[#20BD5A] transition-all duration-300 shadow-lg shadow-[#25D366]/20 hover:shadow-[#25D366]/30">
+                    <span class="iconify text-2xl" data-icon="mdi:whatsapp"></span>
+                    Book via WhatsApp
+                </a>
+                <a href="tel:+923000000000"
+                   class="inline-flex items-center gap-2 text-brand-warmGray text-sm hover:text-brand-ivory transition-colors duration-300 group py-4 px-2">
+                    <span class="iconify text-lg" data-icon="mdi:phone-outline"></span>
+                    Or call us directly
+                    <span class="iconify text-sm group-hover:translate-x-1 transition-transform duration-300" data-icon="mdi:arrow-right"></span>
+                </a>
+            </div>
+
+            <!-- Quick booking info -->
+            <div class="grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-brand-darkBorder/50 max-w-lg mx-auto">
+                <div>
+                    <span class="iconify text-brand-sand text-xl mb-2 mx-auto block" data-icon="mdi:clock-outline"></span>
+                    <p class="text-xs text-brand-ivory font-medium">10am – 10pm</p>
+                    <p class="text-[10px] text-brand-warmGray mt-0.5">Every day</p>
+                </div>
+                <div>
+                    <span class="iconify text-brand-sand text-xl mb-2 mx-auto block" data-icon="mdi:map-marker-outline"></span>
+                    <p class="text-xs text-brand-ivory font-medium">Lahore</p>
+                    <p class="text-[10px] text-brand-warmGray mt-0.5">DHA Phase 5</p>
+                </div>
+                <div>
+                    <span class="iconify text-brand-sand text-xl mb-2 mx-auto block" data-icon="mdi:walk"></span>
+                    <p class="text-xs text-brand-ivory font-medium">Walk-ins</p>
+                    <p class="text-[10px] text-brand-warmGray mt-0.5">Welcome</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SUPPORT / CONTACT ==================== -->
+    <section id="contact" class="py-24 md:py-32 bg-brand-darkCard/50 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="reveal">
+                    <span class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium tracking-[0.2em] uppercase mb-6">
+                        <span class="w-6 h-px bg-brand-sand/60"></span>
+                        Support
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-brand-ivory mb-4">
+                        We're Here for You
+                    </h2>
+                    <p class="text-brand-warmGray text-sm leading-relaxed mb-8">
+                        Have questions, feedback, or need help with a booking? Drop us a message and we'll get back to you within a few hours.
+                    </p>
+
+                    <form id="support-form" onsubmit="submitSupport(event)" class="space-y-4">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <input type="text" placeholder="Full name" required
+                                   class="w-full bg-brand-darkBg border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-ivory placeholder-brand-warmGray/50 focus:outline-none focus:border-brand-sand/40 transition-colors duration-300" />
+                            <input type="email" placeholder="Email address" required
+                                   class="w-full bg-brand-darkBg border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-ivory placeholder-brand-warmGray/50 focus:outline-none focus:border-brand-sand/40 transition-colors duration-300" />
+                        </div>
+                        <select class="w-full bg-brand-darkBg border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-warmGray focus:outline-none focus:border-brand-sand/40 transition-colors duration-300 appearance-none" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A09789' d='M6 8L1 3h10z'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 16px center;">
+                            <option value="">What's this about?</option>
+                            <option value="booking">Booking Issue</option>
+                            <option value="feedback">General Feedback</option>
+                            <option value="complaint">Service Complaint</option>
+                            <option value="partnership">Partnership Inquiry</option>
+                            <option value="other">Something Else</option>
+                        </select>
+                        <textarea rows="4" placeholder="Tell us more..." required
+                                  class="w-full bg-brand-darkBg border border-brand-darkBorder rounded-xl px-4 py-3 text-sm text-brand-ivory placeholder-brand-warmGray/50 focus:outline-none focus:border-brand-sand/40 transition-colors duration-300 resize-none"></textarea>
+                        <button type="submit"
+                                class="w-full bg-brand-ivory text-brand-darkBg font-medium text-sm py-3 rounded-xl hover:bg-brand-sand transition-colors duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="reveal delay-200">
+                    <div class="space-y-8">
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/923000000000" target="_blank"
+                           class="flex items-start gap-5 p-5 rounded-2xl bg-brand-darkBg border border-brand-darkBorder hover:border-[#25D366]/30 transition-all duration-300 group">
+                            <div class="w-12 h-12 rounded-xl bg-[#25D366]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#25D366]/20 transition-colors duration-300">
+                                <span class="iconify text-[#25D366] text-xl" data-icon="mdi:whatsapp"></span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-brand-ivory">WhatsApp Support</p>
+                                <p class="text-xs text-brand-warmGray mt-1">+92 300 000 0000</p>
+                                <p class="text-xs text-brand-warmGray/60 mt-0.5">Usually replies within 30 min</p>
+                            </div>
+                        </a>
+
+                        <!-- Phone -->
+                        <a href="tel:+923000000000"
+                           class="flex items-start gap-5 p-5 rounded-2xl bg-brand-darkBg border border-brand-darkBorder hover:border-brand-sand/30 transition-all duration-300 group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-sand/10 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-sand/20 transition-colors duration-300">
+                                <span class="iconify text-brand-sand text-xl" data-icon="mdi:phone-outline"></span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-brand-ivory">Call Us</p>
+                                <p class="text-xs text-brand-warmGray mt-1">+92 300 000 0000</p>
+                                <p class="text-xs text-brand-warmGray/60 mt-0.5">10:00 AM – 10:00 PM daily</p>
+                            </div>
+                        </a>
+
+                        <!-- Location -->
+                        <a href="https://www.google.com/maps/place/Razor's+Edge+Ltd/@31.4836875,74.4074375,17z" target="_blank"
+                           class="flex items-start gap-5 p-5 rounded-2xl bg-brand-darkBg border border-brand-darkBorder hover:border-brand-olive/30 transition-all duration-300 group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-olive/10 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-olive/20 transition-colors duration-300">
+                                <span class="iconify text-brand-olive text-xl" data-icon="mdi:map-marker-outline"></span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-brand-ivory">Visit Us</p>
+                                <p class="text-xs text-brand-warmGray mt-1">Razor's Edge Ltd, DHA Phase 5</p>
+                                <p class="text-xs text-brand-warmGray/60 mt-0.5">Lahore, Pakistan</p>
+                            </div>
+                        </a>
+
+                        <!-- Map Embed -->
+                        <div class="rounded-2xl overflow-hidden border border-brand-darkBorder h-48">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.5!2d74.4054375!3d31.4836875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190f5513f6fb05%3A0xa735732a8c8faba2!2sRazor&#39;s%20Edge%20Ltd!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+                                width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg) saturate(0.5) brightness(0.8);" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-16 border-t border-brand-darkBorder/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-full border border-brand-sand/40 flex items-center justify-center">
+                            <span class="iconify text-brand-sand text-sm" data-icon="mdi:razor-double-edge"></span>
+                        </div>
+                        <span class="font-serif text-lg font-medium text-brand-ivory">Razor's Edge</span>
+                    </div>
+                    <p class="text-xs text-brand-warmGray leading-relaxed">
+                        Premium grooming rooted in craft, care, and conviction. Lahore's deliberate choice since 2012.
+                    </p>
+                    <div class="flex items-center gap-4 mt-5">
+                        <a href="#" class="text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">
+                            <span class="iconify text-lg" data-icon="mdi:instagram"></span>
+                        </a>
+                        <a href="#" class="text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">
+                            <span class="iconify text-lg" data-icon="mdi:facebook"></span>
+                        </a>
+                        <a href="https://wa.me/923000000000" target="_blank" class="text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">
+                            <span class="iconify text-lg" data-icon="mdi:whatsapp"></span>
+                        </a>
+                        <a href="#" class="text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">
+                            <span class="iconify text-lg" data-icon="mdi:tiktok"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs font-medium tracking-[0.15em] uppercase text-brand-ivory mb-4">Services</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#services" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Classic Cuts</a></li>
+                        <li><a href="#services" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Beard Sculpting</a></li>
+                        <li><a href="#services" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Hot Towel Shave</a></li>
+                        <li><a href="#services" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Kids' Cuts</a></li>
+                        <li><a href="#services" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Premium Packages</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-xs font-medium tracking-[0.15em] uppercase text-brand-ivory mb-4">Company</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#philosophy" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Our Philosophy</a></li>
+                        <li><a href="#reviews" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Reviews</a></li>
+                        <li><a href="#community" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Community</a></li>
+                        <li><a href="#contact" class="text-sm text-brand-warmGray hover:text-brand-ivory transition-colors duration-300">Support</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-xs font-medium tracking-[0.15em] uppercase text-brand-ivory mb-4">Hours</p>
+                    <ul class="space-y-2.5">
+                        <li class="text-sm text-brand-warmGray">Mon – Thu: 10am – 10pm</li>
+                        <li class="text-sm text-brand-warmGray">Fri: 2pm – 10pm</li>
+                        <li class="text-sm text-brand-warmGray">Sat – Sun: 10am – 11pm</li>
+                    </ul>
+                    <a href="https://wa.me/923000000000?text=Hi!%20I'd%20like%20to%20book%20an%20appointment." target="_blank"
+                       class="inline-flex items-center gap-2 text-brand-sand text-xs font-medium mt-4 hover:text-brand-ivory transition-colors duration-300">
+                        <span class="iconify" data-icon="mdi:whatsapp"></span>
+                        Quick Book
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-brand-darkBorder/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-brand-warmGray/60">© 2025 Razor's Edge Ltd. All rights reserved.</p>
+                <p class="text-xs text-brand-warmGray/40">Crafted with care in Lahore</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== FLOATING WHATSAPP ==================== -->
+    <a href="https://wa.me/923000000000?text=Hi%20Razor's%20Edge!%20I'd%20like%20to%20book%20an%20appointment." target="_blank"
+       class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:shadow-[#25D366]/50 hover:scale-110 transition-all duration-300"
+       title="Chat on WhatsApp">
+        <span class="iconify text-white text-3xl" data-icon="mdi:whatsapp"></span>
+    </a>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ---- Navbar scroll ----
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(12, 10, 8, 0.9)';
+                navbar.style.backdropFilter = 'blur(12px)';
+                navbar.style.borderBottom = '1px solid rgba(42, 37, 32, 0.5)';
+            } else {
+                navbar.style.background = 'transparent';
+                navbar.style.backdropFilter = 'none';
+                navbar.style.borderBottom = 'none';
+            }
+        });
+
+        // ---- Mobile menu ----
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileBtn.querySelector('.iconify');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.setAttribute('data-icon', 'mdi:menu');
+            } else {
+                icon.setAttribute('data-icon', 'mdi:close');
+            }
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileBtn.querySelector('.iconify').setAttribute('data-icon', 'mdi:menu');
+            });
+        });
+
+        // ---- Reveal on scroll ----
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.classList.contains('delay-100') ? 100 :
+                                  entry.target.classList.contains('delay-200') ? 200 :
+                                  entry.target.classList.contains('delay-300') ? 300 : 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, delay);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ---- Service tabs ----
+        const servicesData = {
+            home: [
+                { name: 'Classic Cleanup', desc: 'Neck & edge tidy for your off-day polish', price: '₨800', img: 'classic-cleanup' },
+                { name: 'Relaxed Fade', desc: 'Low-maintenance style, effortless at home', price: '₨1,200', img: 'relaxed-fade' },
+                { name: 'Hot Towel Shave', desc: 'Ritual-level relaxation in your own rhythm', price: '₨1,500', img: 'hot-towel-shave' },
+            ],
+            commute: [
+                { name: 'Executive Cut', desc: 'Sharp, professional look for the office', price: '₨1,500', img: 'executive-cut' },
+                { name: 'Corporate Beard Trim', desc: 'Clean lines for the boardroom', price: '₨1,000', img: 'beard-trim-corp' },
+                { name: 'Express Grooming', desc: 'In & out in 20 minutes, office-ready', price: '₨900', img: 'express-grooming' },
+            ],
+            outdoor: [
+                { name: 'Skin Fade', desc: 'Fresh and breathable for active days', price: '₨1,200', img: 'skin-fade-outdoor' },
+                { name: 'Buzz Cut', desc: 'Zero maintenance, maximum impact', price: '₨700', img: 'buzz-cut-style' },
+                { name: 'Adventure Beard Shape', desc: 'Rugged but refined for the outdoors', price: '₨1,000', img: 'adventure-beard' },
+            ]
+        };
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active-tab', 'bg-brand-sand/15', 'text-brand-sand', 'border-brand-sand/30');
+                btn.classList.add('bg-transparent', 'text-brand-warmGray', 'border-brand-darkBorder');
+            });
+            const activeBtn = document.querySelector(`[data-tab="${tab}"]`);
+            activeBtn.classList.add('active-tab', 'bg-brand-sand/15', 'text-brand-sand', 'border-brand-sand/30');
+            activeBtn.classList.remove('bg-transparent', 'text-brand-warmGray', 'border-brand-darkBorder');
+
+            const grid = document.getElementById('services-grid');
+            grid.style.opacity = '0';
+            grid.style.transform = 'translateY(10px)';
+
+            setTimeout(() => {
+                grid.innerHTML = servicesData[tab].map((s, i) => `
+                    <div class="service-card group relative bg-brand-darkBg border border-brand-darkBorder rounded-2xl p-6 hover:border-brand-sand/30 transition-all duration-500 cursor-pointer" onclick="bookService('${s.name}')">
+                        <div class="overflow-hidden rounded-xl mb-5">
+                            <img src="https://picsum.photos/seed/${s.img}/600/400.jpg" alt="${s.name}"
+                                 class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" />
+                        </div>
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium text-brand-ivory group-hover:text-brand-sand transition-colors duration-300">${s.name}</h3>
+                                <p class="text-xs text-brand-warmGray mt-1">${s.desc}</p>
+                            </div>
+                            <span class="font-serif text-brand-sand text-lg">${s.price}</span>
+                        </div>
+                        <div class="service-line h-px bg-brand-sand/40 mt-4"></div>
+                    </div>
+                `).join('');
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // ---- Book service via WhatsApp ----
+        function bookService(serviceName) {
+            const msg = encodeURIComponent(`Hi Razor's Edge! I'd like to book: ${serviceName}. What times are available?`);
+            window.open(`https://wa.me/923000000000?text=${msg}`, '_blank');
+        }
+
+        // ---- Star rating ----
+        let currentRating = 0;
+        const ratingLabels = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+
+        function setRating(rating) {
+            currentRating = rating;
+            document.querySelectorAll('.star-input').forEach(star => {
+                const r = parseInt(star.getAttribute('data-rating'));
+                if (r <= rating) {
+                    star.classList.add('active');
+                    star.style.color = '#C4A882';
+                } else {
+                    star.classList.remove('active');
+                    star.style.color = '#2A2520';
+                }
+            });
+            document.getElementById('rating-label').textContent = ratingLabels[rating];
+        }
+
+        // Star hover
+        document.querySelectorAll('.star-input').forEach(star => {
+            star.addEventListener('mouseenter', function() {
+                const r = parseInt(this.getAttribute('data-rating'));
+                document.querySelectorAll('.star-input').forEach(s => {
+                    const sr = parseInt(s.getAttribute('data-rating'));
+                    s.style.color = sr <= r ? '#C4A882' : '#2A2520';
+                });
+            });
+            star.addEventListener('mouseleave', function() {
+                document.querySelectorAll('.star-input').forEach(s => {
+                    const sr = parseInt(s.getAttribute('data-rating'));
+                    s.style.color = sr <= currentRating ? '#C4A882' : '#2A2520';
+                });
+            });
+        });
+
+        // ---- Submit review ----
+        function submitReview() {
+            const name = document.getElementById('review-name').value.trim();
+            const service = document.getElementById('review-service').value.trim();
+            const text = document.getElementById('review-text').value.trim();
+
+            if (!name || !text) {
+                showToast('Please fill in your name and review.', 'error');
+                return;
+            }
+            if (currentRating === 0) {
+                showToast('Please select a star rating.', 'error');
+                return;
+            }
+
+            const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            const stars = Array(5).fill(0).map((_, i) =>
+                `<span class="iconify text-brand-sand text-sm" data-icon="mdi:star${i < currentRating ? '' : '-outline'}"></span>`
+            ).join('');
+
+            const reviewHTML = `
+                <div class="comment-new bg-brand-darkCard border border-brand-sand/20 rounded-xl p-4">
+                    <div class="flex items-center gap-0.5 mb-2">${stars}</div>
+                    <p class="text-sm text-brand-warmGray leading-relaxed">${text}</p>
+                    <div class="flex items-center gap-3 mt-3 pt-3 border-t border-brand-darkBorder/50">
+                        <div class="w-7 h-7 rounded-full bg-brand-sand/20 flex items-center justify-center">
+                            <span class="text-brand-sand text-[10px] font-medium">${initials}</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-brand-ivory">${name}</p>
+                            <p class="text-[10px] text-brand-warmGray">${service ? service + ' • ' : ''}Just now</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const container = document.getElementById('user-reviews');
+            container.insertAdjacentHTML('afterbegin', reviewHTML);
+
+            // Reset form
+            document.getElementById('review-name').value = '';
+            document.getElementById('review-service').value = '';
+            document.getElementById('review-text').value = '';
+            setRating(0);
+            document.getElementById('rating-label').textContent = 'Select your rating';
+
+            showToast('Thank you for your review! 🙏', 'success');
+        }
+
+        // ---- Submit support ----
+        function submitSupport(e) {
+            e.preventDefault();
+            showToast('Message sent! We\'ll get back to you soon.', 'success');
+            e.target.reset();
+        }
+
+        // ---- Toast notification ----
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgColor = type === 'error' ? 'bg-brand-terracotta/90' : 'bg-brand-olive/90';
+            const icon = type === 'error' ? 'mdi:alert-circle-outline' : 'mdi:check-circle-outline';
+
+            toast.className = `toast-in ${bgColor} backdrop-blur-md text-brand-ivory px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm font-medium max-w-sm`;
+            toast.innerHTML = `
+                <span class="iconify text-lg" data-icon="${icon}"></span>
+                ${message}
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('toast-in');
+                toast.classList.add('toast-out');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ---- Services grid transition ----
+        const servicesGrid = document.getElementById('services-grid');
+        servicesGrid.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    </script>
+</body>
+</html>
